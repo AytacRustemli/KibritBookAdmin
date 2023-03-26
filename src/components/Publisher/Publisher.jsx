@@ -1,8 +1,8 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Table } from 'semantic-ui-react';
-import { BASE_URL } from '../../api/config';
+import { BASE_URL, FILE_PATH } from '../../api/config';
 
 const Publisher = () => {
   const [Name, setName] = useState("");
@@ -44,9 +44,7 @@ const Publisher = () => {
       });
   };
 
-  useEffect(() => {
-    getPublisher();
-  }, [onDelete]);
+  getPublisher();
 
   return (
     <div id="publisher" className="my-5">
@@ -71,7 +69,7 @@ const Publisher = () => {
                 <Table.Row>
                   <Table.Cell>{data.name}</Table.Cell>
                   <Table.Cell>
-                    <img width="50px" src={data.photoURL} alt="" />
+                    <img width="50px" src={`${FILE_PATH}${data.photoURL}`} alt="" />
                   </Table.Cell>
                   <Table.Cell>{data.publishDate}</Table.Cell>
                   <Link to={`/publisher/update/${data.id}`}>
@@ -101,4 +99,4 @@ const Publisher = () => {
   )
 }
 
-export default Publisher
+export default Publisher;

@@ -1,12 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './sideBar.scss';
+// import logo from "../../Images/Logo.png"
+import logo from "../../Images/logo.jpeg"
 
 const SideBar = () => {
-
   return (
-    <div className="sideBar">
+    <div id="sideBar">
       <ul>
+        <li className='dashboard'>
+          <img width="50" className='p-1' src={logo} alt="" />
+          <span>KibritBook</span>
+        </li>
+        <hr />
+
         <li className="language">
           <Link to='/language'>Language</Link>
         </li>

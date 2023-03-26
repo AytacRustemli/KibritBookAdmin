@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Table } from 'semantic-ui-react';
-import { BASE_URL } from '../../api/config';
+import { BASE_URL, FILE_PATH } from '../../api/config';
 
 const Slider = () => {
   const [photoUrl, setPhoto] = useState("");
@@ -38,9 +38,7 @@ const Slider = () => {
       });
   };
 
-  useEffect(() => {
-    getSlider();
-  }, [onDelete]);
+  getSlider();
 
   return (
     <div id="slider" className="my-5">
@@ -62,7 +60,7 @@ const Slider = () => {
               return (
                 <Table.Row>
                   <Table.Cell>
-                    <img width="50px" src={data.photoUrl} alt="" />
+                    <img width="50px" src={`${FILE_PATH}${data.photoUrl}`} alt="" />
                   </Table.Cell>
                   <Link to={`/slider/update/${data.id}`}>
                     <Table.Cell>
