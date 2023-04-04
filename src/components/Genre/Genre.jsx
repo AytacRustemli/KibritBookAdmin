@@ -43,9 +43,9 @@ const Genre = () => {
       });
   };
 
-  useEffect(() => {
-    getGenre();
-  }, [onDelete]);
+  
+  getGenre();
+  
 
   return (
     <div id="genre" className="my-5">
