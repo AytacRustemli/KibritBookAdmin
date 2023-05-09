@@ -8,14 +8,14 @@ import { useDispatch } from 'react-redux'
 const CreateBook = () => {
   const [Name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [salePrice, setSalePrice] = useState("");
   const [quantity, setQuantity] = useState(0);
   const [isStock, setIsStock] = useState(false);
   const [isTranslate, setIsTranslate] = useState(false);
   const [isSale, setIsSale] = useState(false);
   const [translator, setTranslator] = useState("");
-  const [bookCover, setBookCover] = useState("");
+  const [bookCover, setBookCover] = useState();
   const [paperType, setPaperType] = useState("");
   const [size, setSize] = useState("");
   const [bookPictures, setBookPictures] = useState([]);
@@ -30,18 +30,19 @@ const CreateBook = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const getAuthor = async () => {
-    axios.get(BASE_URL + "author/getall").then((response) => {
-      setAPIData2(response.data);
-    });
-  };
-
   const getPublisher = async () => {
     axios.get(BASE_URL + "publisher/getall").then((response) => {
       setAPIData(response.data);
     });
   };
 
+  const getAuthor = async () => {
+    axios.get(BASE_URL + "author/getall").then((response) => {
+      setAPIData2(response.data);
+    });
+  };
+
+  
   const getGenre = async () => {
     axios.get(BASE_URL + "genre/getall").then((response) => {
       setAPIData3(response.data);
@@ -56,36 +57,45 @@ const CreateBook = () => {
 
 
   const createBook = async () => {
-    fetch(`${BASE_URL}book/add`, {
-      method: "POST",
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: Name,
-        description: description,
-        price: price,
-        salePrice: salePrice,
-        quantity: quantity,
-        isStock: isStock,
-        isTranslate: isTranslate,
-        isSale: isSale,
-        translator: translator,
-        bookCover: bookCover,
-        paperType: paperType,
-        size: size,
-        bookPictures: bookPictures,
-        authorId: author,
-        publisherId: publisher,
-        genreId: genre,
-        languageId: language
-      })
-    }).then(res => res.json()).then(res => {
-      navigate("/book")
-    })
+    const bookData = {
+      name: Name,
+      description: description,
+      price: price,
+      salePrice: salePrice,
+      quantity: quantity,
+      isStock: isStock,
+      isTranslate: isTranslate,
+      isSale: isSale,
+      translator: translator,
+      bookCover: bookCover,
+      paperType: paperType,
+      size: size,
+      bookPictures: bookPictures,
+      authorId: author,
+      publisherId: publisher,
+      genreId: genre,
+      languageId: language
+    };
+    // console.log(bookData);
+  
+    try {
+      const response = await fetch(`${BASE_URL}book/add`, {
+        method: "POST",
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookData)
+      });
+  
+      const data = await response.json();
+      console.log(data);
+  
+    } catch (error) {
+      console.log(error);
+    }
   }
-
+  
   const fileUploadHandler = async (event) => {
     const formData = new FormData();
     formData.append('Image', event.target.files[0])
@@ -96,23 +106,27 @@ const CreateBook = () => {
       console.log(ex);
     }
   }
-
+  
   const multiplePicture = async (event) => {
     let myImageList = []
-    let imageList = {
-      photoUrl: ""
-    }
     for (let i = 0; i < event.target.files.length; i++) {
       let formData = new FormData();
       formData.append("Image", event.target.files[i])
-      let res = await axios.post(`${BASE_URL}Book/uploadimages`, formData)
-      imageList = {
-        photoUrl: res.data.message
+      try {
+        let res = await axios.post(`${BASE_URL}Book/uploadimages`, formData)
+        let imageList = {
+          photoUrl: res.data.message
+        }
+        myImageList.push(imageList)
+      } catch (ex) {
+        console.log(ex);
       }
-      myImageList.push(imageList)
     }
     setBookPictures(myImageList);
   }
+  
+
+
 
 
   useEffect(() => {
@@ -143,7 +157,7 @@ const CreateBook = () => {
               <TextField fullWidth id="outlined-basic" onChange={(e) => setQuantity(e.target.value)} label="Quantity" variant="outlined" />
             </div>
             <div className="col-lg-4 my-2">
-              <TextField fullWidth id="outlined-basic" onChange={(e) => setPrice(e)} label="Price" variant="outlined" />
+              <TextField fullWidth id="outlined-basic" type='number' onChange={(e) => setPrice(e.target.value)} label="Price" variant="outlined" />
             </div>
 
             <div className="col-lg-4 my-2">
@@ -286,10 +300,7 @@ const CreateBook = () => {
                       ))
                     }
                   </div>
-
                 </div>
-
-
               </div>
             </div>
           </div>

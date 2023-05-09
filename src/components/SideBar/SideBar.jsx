@@ -13,7 +13,9 @@ const SideBar = () => {
           <span>KibritBook</span>
         </li>
         <hr />
-
+        <li className="book">
+          <Link to='/book'>Book</Link>
+        </li>
         <li className="language">
           <Link to='/language'>Language</Link>
         </li>
@@ -29,9 +31,7 @@ const SideBar = () => {
         <li className="slider">
           <Link to='/slider'>Slider</Link>
         </li>
-        <li className="book">
-          <Link to='/book'>Book</Link>
-        </li>
+        
       </ul>
     </div>
   );

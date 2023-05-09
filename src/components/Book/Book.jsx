@@ -30,26 +30,6 @@ const Book = () => {
     });
   };
 
-  const setData = (data) => {
-    let { id, name, description, price,salePrice,isStock,isTranslate,isSale,translator,bookCover,paperType, size, author, publisher, genre, language,bookPictures } = data;
-    localStorage.setItem("ID", id);
-    localStorage.setItem("Name", name);
-    localStorage.setItem("Description", description);
-    localStorage.setItem("Price", price);
-    localStorage.setItem("SalePrice", salePrice);
-    localStorage.setItem("IsStock", isStock);
-    localStorage.setItem("IsTranslate", isTranslate);
-    localStorage.setItem("IsSale", isSale);
-    localStorage.setItem("Translator", translator);
-    localStorage.setItem("BookCover", bookCover);
-    localStorage.setItem("PaperType", paperType);
-    localStorage.setItem("Size", size);
-    localStorage.setItem("Author", author);
-    localStorage.setItem("Publisher", publisher);
-    localStorage.setItem("Genre", genre);
-    localStorage.setItem("Language", language);
-    localStorage.setItem("BookPictures", bookPictures);
-  };
 
 
   const onDelete = (id) => {
@@ -116,7 +96,7 @@ const Book = () => {
                     </div>
                     <div className="col-lg-6">
                       <Link to={`/book/update/${product.id}`}>
-                        <button className='btn btn-outline-warning w-100' onClick={() => setData(product)}>Edit</button>
+                        <button className='btn btn-outline-warning w-100'>Edit</button>
                       </Link>
                     </div>
                   </div>
