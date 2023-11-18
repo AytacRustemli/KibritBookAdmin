@@ -18,6 +18,7 @@ import Slider from '../components/Slider/Slider'
 import UpdateSlider from '../components/Slider/UpdateSlider'
 import CreateBook from '../components/Book/CreateBook'
 import UpdateBook from '../components/Book/UpdateBook'
+import Order from '../components/Order/Order'
 
 const MyRouter = () => {
   return (
@@ -40,6 +41,7 @@ const MyRouter = () => {
       <Route path='/book' element={<Book />}/>
       <Route path='/book/create' element={<CreateBook />}/>
       <Route path='/book/update/:id' element={<UpdateBook />}/>
+      <Route path='/order' element={<Order />} />
     </Routes>
   )
 }

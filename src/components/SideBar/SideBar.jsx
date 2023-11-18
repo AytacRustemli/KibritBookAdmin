@@ -31,7 +31,9 @@ const SideBar = () => {
         <li className="slider">
           <Link to='/slider'>Slider</Link>
         </li>
-        
+        <li className="order">
+          <Link to='/order'>Order</Link>
+        </li>
       </ul>
     </div>
   );
